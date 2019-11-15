@@ -1,27 +1,19 @@
 module Luhn
   def self.is_valid?(number)
-    card = number.to_s.split('')
-
-    i = card.length - 2
-    while i >= 0
-      card[i]=card[i].to_i*2
-
-      if card[i].to_i>9 then
-        card[i]=card[i].to_i-9
-      end
-      i = i-2
-    end
-
+    number = number.to_s.chars.reverse
+    number = number.map(&:to_i)
     count = 0
-    card.each do |x|
-      count = x.to_i + count
+    number.each_with_index do |x, i|
+      if i.odd?
+        x = x * 2
+        if x > 9
+          x = x-9
+        end
+      end
+      count = count + x
     end
 
-    if count%10 == 0
-      return true
-    else
-      return false
-    end
-
-  end
+    return count%10 == 0
+      
+   end
 end
