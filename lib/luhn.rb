@@ -1,20 +1,26 @@
 module Luhn
   def self.is_valid?(number)
-    card = number.split("")
+    card = number.to_s.split('')
 
-    i = 0
-    while i < 16 [do]
+    i = card.length - 2
+    while i >= 0
       card[i]=card[i].to_i*2
 
-      if card[i].to_i>=10 then
+      if card[i].to_i>9 then
         card[i]=card[i].to_i-9
       end
-      i = i+2
+      i = i-2
     end
 
     count = 0
     card.each do |x|
-      count = card[x].to_i + count
+      count = x.to_i + count
+    end
+
+    if count%10 == 0
+      return true
+    else
+      return false
     end
 
   end
